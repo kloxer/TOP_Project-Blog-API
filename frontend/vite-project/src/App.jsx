@@ -33,7 +33,7 @@ useEffect(() => {
       console.log(username);
       console.log(password);
         try{
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch('http://localhost:3000/users/', {
           method:'GET',
           headers:{
             'Content-Type':'application/json',
@@ -46,12 +46,12 @@ useEffect(() => {
           console.log(data.message);
           navigate('/d');
         }else{
-          setError(data.message);
+          // setError(data.message);
         }
       }
     catch(err){
       console.log('Error during login:', error);
-      setError('An error occured while logging in');
+      // setError('An error occured while logging in');
     }
   };
 
@@ -65,19 +65,13 @@ useEffect(() => {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <p>{hi}</p>
+
 
       <form onSubmit={handleSubmit}>
       <h2>Log in</h2>
@@ -94,7 +88,8 @@ useEffect(() => {
       <button type="submit" >Log in</button>
       </form>
 
-    <Link to="register">Register today</Link>
+<h2> <Link to="register">Register today</Link></h2>
+
     </>
   )
 }

@@ -1,7 +1,7 @@
 
 
 
-function loginUser(req,res) {
+const loginUser = (req,res) => {
 
     console.log(req.body);
     res.redirect("/");
@@ -10,5 +10,7 @@ function loginUser(req,res) {
 function createUser(req,res){
 
     console.log(req.body);
+    res.redirect("/");
+
 }
 module.exports = { loginUser, createUser }

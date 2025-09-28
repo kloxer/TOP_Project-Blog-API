@@ -44,4 +44,11 @@
 form{
   display: flex;
   flex-direction: column;
+  border-style: solid;
+gap:10px;
+padding:15px 50px;
+}
+button{
+  border-style: solid;
+  border-color: black;
 }

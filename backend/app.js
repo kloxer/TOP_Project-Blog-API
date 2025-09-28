@@ -15,9 +15,6 @@ const usersRouter = require("./routes/users")
 app.use(express.urlencoded({ extended: true }));
 
 
-app.get("/api",(req,res)=>{
-    res.json("hissfsfsf");
-});
 
 app.use("/users", usersRouter);
 
