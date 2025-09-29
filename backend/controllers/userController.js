@@ -1,4 +1,4 @@
-
+const db = require("../models/dbController")
 
 
 const loginUser = (req,res) => {
