@@ -2,15 +2,23 @@ import './App.css'
 import { useState , useEffect } from 'react'
 
 import { Link } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
+
 function Register(){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
+  const navigate = useNavigate();
+
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
     async function handleSubmit(e){
         e.preventDefault();
-
         try{
-            const response = await fetch('http://localhost:3000/users', {
+            const response = await fetch('http://localhost:3003/users/signup', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -20,15 +28,19 @@ function Register(){
         
         const data = await response.json();
         if (response.ok){
-            console.log("registered")
+            setMessage("Sucessfully registered");
+            setMessageType("success")
         }
-
-
+        else{
+            setMessage(data.error  || 'Username or email already in use.')
+            setMessageType("error")
+        }
 
         }
         catch(err){
-        console.log('Error during login:', err);
-
+            console.log('Error during login:', err);
+            setMessage('Something went wrong... please try again')
+            setMessageType("error");
         }
     }
 
@@ -36,8 +48,11 @@ function Register(){
 
     <h1>Register today!</h1>
 
-    <form onSubmit={handleSubmit}>
 
+    {message &&
+    <p>{message}</p>
+    }
+    <form onSubmit={handleSubmit}>
         <label htmlFor="">Username:
         <input type="text" name="username" onChange={(e)=> setUsername(e.target.value)} /> </label>
 

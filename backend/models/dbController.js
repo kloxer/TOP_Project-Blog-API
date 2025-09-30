@@ -1,17 +1,29 @@
-const { PrismaClient } = require('./generated/prisma')
+const { PrismaClient } = require('../generated/prisma')
 
 const prisma = new PrismaClient()
 
-async function createUser(name, password, email) {
-  await prisma.user.create({
-    data: {
-      name: name,
-      password: password,
-      email: email,
-    },
-  })
+async function loginUser(username, password){
 
+    const user = await prisma.user.findUnique({
+        where:{
+            username: username,
+        }
+    })
+    return user;
+}
+
+
+async function createUser(username, password, email) {
+  const user = await prisma.user.create({
+    data: {
+      username: username,
+    email: email,
+
+      password: password,
+    },
+  });
+    return user;
 
 }
 
-module.exports = {createUser}
+module.exports = {createUser, loginUser}
