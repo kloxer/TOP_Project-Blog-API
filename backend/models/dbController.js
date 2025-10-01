@@ -2,7 +2,7 @@ const { PrismaClient } = require('../generated/prisma')
 
 const prisma = new PrismaClient()
 
-async function loginUser(username, password){
+async function loginUser(username){
 
     const user = await prisma.user.findUnique({
         where:{
