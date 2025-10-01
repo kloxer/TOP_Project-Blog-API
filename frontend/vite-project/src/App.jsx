@@ -14,6 +14,9 @@ function App() {
 
   const [loginMsg, setLoginMsg] = useState('');
 
+  const [user, setUser] = useState('');
+  const [logInState, setLogInState] = useState(false);
+
   async function getData(){
     const response = await fetch("http://localhost:3003/api/");
     const data = await response.json();
@@ -31,6 +34,9 @@ useEffect(() => {
   fetchData();
 }, []);
 
+
+  const navigate = useNavigate();
+
     async function handleSubmit(e){
         e.preventDefault();  // Prevents form from reloading the page
         try{
@@ -43,12 +49,15 @@ useEffect(() => {
         });
         
         const data = await response.json();
+        console.log(data)
         if (response.ok){
-          console.log(data.message);
-          // navigate('/');
-          setLoginMsg("Logging in!")
+          // setLogInState(true);
+          // setUser(data.user.username);
+          // console.log(data);
+          navigate('/profile');
+          // setLoginMsg(data.message);
         }else{
-          setLoginMsg(data.error);
+          setLoginMsg(data.message);
           // setError(data.message);
         }
       }
@@ -57,6 +66,30 @@ useEffect(() => {
       // setError('An error occured while logging in');
     }
   };
+
+  async function logOut(e) {
+    e.preventDefault();
+    try{
+      const response = await fetch('http://localhost:3003/users/logout', {
+        method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify({username}),
+      });
+
+      const data = response.json();
+
+      if (response.ok){
+        setLogInState(false);
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+
+    
+  }
 
   return (
     <>
@@ -75,10 +108,17 @@ useEffect(() => {
 
       </div>
   <p>{hi}</p>
-    {loginMsg && 
-    <p> {loginMsg}</p>
-    }
 
+    {logInState ? 
+    <div>
+    <p>Logged in as: {user}</p>
+    <form onSubmit={logOut}>
+      <button>Logout</button>
+    </form>
+    </div>
+    
+    :
+<div>
       <form onSubmit={handleSubmit}>
       <h2>Log in</h2>
 
@@ -92,9 +132,17 @@ useEffect(() => {
                             /></label>
 
       <button type="submit" >Log in</button>
-      </form>
+              {loginMsg && 
+        <p> {loginMsg}</p>
+        }
 
-<h2> <Link to="register">Register today</Link></h2>
+      </form>
+    <h2> 
+      <Link to="register">Register today</Link>
+      </h2>
+</div>
+
+    }
 
     </>
   )

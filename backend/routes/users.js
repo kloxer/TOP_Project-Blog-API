@@ -2,12 +2,15 @@ const express = require("express");
 
 const usersRouter = express.Router();
 
-const { loginUser , createUser}  = require("../controllers/userController");
+const { loginUserPassport , createUser, logOut}  = require("../controllers/userController");
 
-
-usersRouter.post("/login", loginUser);
+usersRouter.get("/:userid", (req,res)=>{
+    res.json("hi");
+})
+usersRouter.post('/login',  loginUserPassport);
 
 usersRouter.post("/signup", createUser);
 
+usersRouter.post("/logout", logOut )
 
 module.exports = usersRouter;

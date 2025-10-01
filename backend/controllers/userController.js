@@ -1,9 +1,12 @@
 const db = require("../models/dbController")
 const bcrypt = require('bcryptjs')
 
+const passport = require("passport"); // Adjust path as needed
+
+
 async function loginUser (req,res)  {
     try{
-        const user = await db.loginUser(req.body.username, req.body.password)
+        const user = await db.loginUser(req.body.username)
         if (!user){
             return res.status(404).json({error: "User not found!"})
         }
@@ -17,10 +20,40 @@ async function loginUser (req,res)  {
         res.status(400).json({error:err});
     }
     res.status(500).json({ error: 'Internal server error' });
+}
+
+async function loginUserPassport(req,res,next){
+passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+
+    // Authentication failed: no user
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: info?.message || 'Authentication failed'
+      });
+    }
+
+    // Establish a session
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+
+      // Successful login - send user data as JSON
+      return res.json({
+        success: true,
+        message: 'Login successful',
+        user: {
+          id: user.id,
+          username: user.username
+        }
+      });
+    });
+  })(req, res, next);
 
 }
 
 async function createUser(req,res){
+
     const { username,password, email } = req.body
     try{
         const hashedPwd = await bcrypt.hash(password,10)
@@ -36,4 +69,14 @@ async function createUser(req,res){
     }
     return res.status(500).json({ error: 'Internal server error' });
 }
-module.exports = { loginUser, createUser }
+
+ function logOut(req,res,next){
+    req.logout((err) => {
+        if (err) {
+        return next(err);
+        }
+        res.status(201).json({message:"Logged Out!"});
+    });
+}
+
+module.exports = { loginUserPassport, createUser, logOut }

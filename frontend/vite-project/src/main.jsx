@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Register from './register.jsx';
-
+import Profile from './profile.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -14,12 +14,15 @@ const router = createBrowserRouter([
     path: "register",
     element: <Register />,
   },
+  {
+    path: "profile",
+    element:<Profile />,
+  }
 ]);
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
         <RouterProvider router={router} />
-    
   </StrictMode>,
 )
