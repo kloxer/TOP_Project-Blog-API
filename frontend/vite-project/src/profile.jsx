@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router";
 
 
 function Profile(){
@@ -7,20 +8,28 @@ function Profile(){
     const [username, setUsername] = useState('b');
     const [email, setEmail] = useState('c');
     const [userPresent, setUserPresent] = useState(false);
-    async function getUserInfo(){
 
+
+
+    const [msgTest, setMsgTest] = useState('d');
+
+    async function getUserInfo(){
         try{
-            const response = await fetch("http://localhost:3003/users/:userid",{
+            const response = await fetch("http://localhost:3003/api/me",{
                 credentials: 'include', // IMPORTANT
                 headers: { 'Content-Type': 'application/json' },
-
             })
             const data = await response.json();
+            console.log(data)
             if (response.ok){
-                return data.user;
+                if (data.loggedIn)
+                    setMsgTest(data.message)
+                else{
+                    setMsgTest(data.message)
+                }
             }
             else{
-                return null;
+                setMsgTest("error retreieving form server")
             }
             
         }
@@ -31,13 +40,13 @@ function Profile(){
 
     useEffect(()=>{
 
-        const user =  getUserInfo();
-        if (user){
-            setUserPresent(true);
-            setUserId(user.id);
-            setUsername(user.username);
-            setEmail(user.email);
-        }
+        getUserInfo();
+        // if (user){
+        //     setUserPresent(true);
+        //     setUserId(user.id);
+        //     setUsername(user.username);
+        //     setEmail(user.email);
+        //}
     }, [])
 
     return(
@@ -45,7 +54,10 @@ function Profile(){
 
     <div>
         <h2>Welcome to  your profile</h2>
+        {msgTest}
         <p>{userid} {username} {email}</p>
+
+        <Link to="/">Return home</Link>
     </div>
     
     </>

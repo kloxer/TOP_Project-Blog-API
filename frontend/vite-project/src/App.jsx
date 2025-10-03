@@ -8,64 +8,64 @@ import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [count, setCount] = useState(0)
-  const [hi, setHi] = useState(null);
+  const [hi, setHi] = useState('null');
   const [username, setUsername] = useState('d');
   const [password, setPassword] = useState('d');
 
   const [loginMsg, setLoginMsg] = useState('');
 
   const [user, setUser] = useState('');
-  const [logInState, setLogInState] = useState(false);
+  const [logInState, setloginState] = useState(false);
 
-  async function getData(){
-    const response = await fetch("http://localhost:3003/api/");
-    const data = await response.json();
-    return data;
-  }
+//   async function getData(){
+//   const response = await fetch("http://localhost:3003/api/", {
+//     credentials: 'include'
+//   });
+//   const data = await response.json();
+//   return data;
+// }
 
-useEffect(() => {
-  async function fetchData() {
-    const result = await getData();
-    if (result) {
-      setHi(result);
-    }
-  }
+// useEffect(() => {
+//   async function fetchData() {
+//     const result = await getData();
+//     if (result) {
+//       setHi(result);
+//     }
+//   }
+//   fetchData();
+// }, []);
 
-  fetchData();
-}, []);
 
-
-  const navigate = useNavigate();
-
-    async function handleSubmit(e){
-        e.preventDefault();  // Prevents form from reloading the page
+   async function checkIfLoggedIn(){
         try{
-        const response = await fetch('http://localhost:3003/users/login', {
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json',
-          },
-          body: JSON.stringify({username, password}),
-        });
-        
-        const data = await response.json();
-        console.log(data)
-        if (response.ok){
-          // setLogInState(true);
-          // setUser(data.user.username);
-          // console.log(data);
-          navigate('/profile');
-          // setLoginMsg(data.message);
-        }else{
-          setLoginMsg(data.message);
-          // setError(data.message);
+            console.log("trying to get data....")
+            const response = await fetch("http://localhost:3003/api/me",{
+                credentials: 'include', // IMPORTANT
+                headers: { 'Content-Type': 'application/json' },
+            })
+            const data = await response.json();
+            console.log(data)
+            if (response.ok){
+                if (data.loggedIn)
+                    setloginState(data.loggedIn)
+                else{
+                    setloginState(data.loggedIn)
+                }
+            }
+            else{
+                console.log("failed to get form server")
+            }
+            
         }
-      }
-    catch(err){
-      console.log('Error during login:', err);
-      // setError('An error occured while logging in');
+        catch(err){
+            console.log(err);
+        }
     }
-  };
+
+    useEffect(()=>{
+        checkIfLoggedIn();
+    }, [])
+
 
   async function logOut(e) {
     e.preventDefault();
@@ -75,13 +75,14 @@ useEffect(() => {
           headers:{
             'Content-Type':'application/json',
           },
+          credentials:'include',
           body: JSON.stringify({username}),
       });
 
       const data = response.json();
 
       if (response.ok){
-        setLogInState(false);
+        setloginState(false);
       }
     }
     catch(err){
@@ -107,40 +108,23 @@ useEffect(() => {
         </button>
 
       </div>
+
   <p>{hi}</p>
 
     {logInState ? 
     <div>
     <p>Logged in as: {user}</p>
+    <Link to="/profile">Check out profile</Link>
+    
     <form onSubmit={logOut}>
       <button>Logout</button>
     </form>
     </div>
     
     :
-<div>
-      <form onSubmit={handleSubmit}>
-      <h2>Log in</h2>
-
-      <label htmlFor="user">Username 
-      <input type="text" name="username"
-      onChange={(e)=> setUsername(e.target.value)}/></label>
-
-        <label htmlFor="password">Password 
-        <input type="password" name="password" 
-        onChange={(e) => setPassword(e.target.value)}
-                            /></label>
-
-      <button type="submit" >Log in</button>
-              {loginMsg && 
-        <p> {loginMsg}</p>
-        }
-
-      </form>
-    <h2> 
-      <Link to="register">Register today</Link>
-      </h2>
-</div>
+    <div>
+          <Link to="/login">Login here</Link>
+    </div>
 
     }
 
