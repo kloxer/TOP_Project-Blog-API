@@ -24,26 +24,28 @@ app.use(express.json()); // forgot to use this to send json adnr ecieve it
 
 
 //session related
-app.use(session({ 
-    secret: "cats", 
-    resave: false, 
-    saveUninitialized: true,
-cookie:{
-    maxAge: 1000 * 60 * 60 * 24
-} }));
-app.use(passport.session());
-require("./config/passport"); // Just require it to run its setup
+// app.use(session({ 
+//     secret: "cats", 
+//     resave: false, 
+//     saveUninitialized: true,
+// cookie:{
+//     maxAge: 1000 * 60 * 60 * 24
+// } }));
+
+
+// app.use(passport.session());
+// require("./config/passport"); // Just require it to run its setup
 
 
 //Test api endpoint
 
-app.use((req, res, next) => {
-console.log("cookie data: ", req.headers.cookie)
-   console.log(`Total sessions: ${Object.keys(req.session).length}`);
-  console.log("Session data:", req.session);
-  console.log(req.user)
-  next();
-});
+// app.use((req, res, next) => {
+// console.log("cookie data: ", req.headers.cookie)
+//    console.log(`Total sessions: ${Object.keys(req.session).length}`);
+//   console.log("Session data:", req.session);
+//   console.log(req.user)
+//   next();
+// });
 
 
 app.get("/api",(req,res)=>{ 
@@ -64,6 +66,8 @@ app.get("/api/me",(req,res)=>{
   }
 
 });
+
+
 app.use("/users", usersRouter);
 
 app.listen(3003, (err)=>{

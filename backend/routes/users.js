@@ -2,12 +2,12 @@ const express = require("express");
 
 const usersRouter = express.Router();
 
-const { loginUserPassport , createUser, logOut}  = require("../controllers/userController");
+const { loginUserPassport , createUser, logOut, loginUser}  = require("../controllers/userController");
 
 usersRouter.get("/:userid", (req,res)=>{
     res.json("hi");
 })
-usersRouter.post('/login',  loginUserPassport);
+usersRouter.post('/login',  loginUser);
 
 usersRouter.post("/signup", createUser);
 
