@@ -13,28 +13,28 @@ const LocalStrategy = require('passport-local').Strategy;
 const cors = require('cors');
 const usersRouter = require("./routes/users");
 
-app.use(cors({
-  origin: "http://localhost:5173", // your React frontend
-  credentials: true                // 🔑 allow cookies
-}));
+// app.use(cors({
+//   origin: "http://localhost:5173", // your React frontend
+//   credentials: true                // 🔑 allow cookies
+// }));
 
-// app.use(cors)
+app.use(cors)
 app.use(express.urlencoded({ extended: true })) //POST data sent in req body
 app.use(express.json()); // forgot to use this to send json adnr ecieve it
 
 
-//session related
-// app.use(session({ 
-//     secret: "cats", 
-//     resave: false, 
-//     saveUninitialized: true,
-// cookie:{
-//     maxAge: 1000 * 60 * 60 * 24
-// } }));
+// session related
+app.use(session({ 
+    secret: "cats", 
+    resave: false, 
+    saveUninitialized: true,
+cookie:{
+    maxAge: 1000 * 60 * 60 * 24
+} }));
 
 
-// app.use(passport.session());
-// require("./config/passport"); // Just require it to run its setup
+app.use(passport.session());
+require("./config/passport"); // Just require it to run its setup
 
 
 //Test api endpoint
@@ -47,6 +47,9 @@ app.use(express.json()); // forgot to use this to send json adnr ecieve it
 //   next();
 // });
 
+app.get("/",(req,res)=>{
+  res.json("hi")
+})
 
 app.get("/api",(req,res)=>{ 
   console.log("api reqs")
