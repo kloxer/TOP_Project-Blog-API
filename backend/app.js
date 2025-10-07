@@ -13,12 +13,12 @@ const LocalStrategy = require('passport-local').Strategy;
 const cors = require('cors');
 const usersRouter = require("./routes/users");
 
-// app.use(cors({
-//   origin: "http://localhost:5173", // your React frontend
-//   credentials: true                // 🔑 allow cookies
-// }));
+app.use(cors({
+  origin: "http://localhost:5173", // your React frontend
+  credentials: true                // 🔑 allow cookies
+}));
 
-app.use(cors)
+// app.use(cors())
 app.use(express.urlencoded({ extended: true })) //POST data sent in req body
 app.use(express.json()); // forgot to use this to send json adnr ecieve it
 
