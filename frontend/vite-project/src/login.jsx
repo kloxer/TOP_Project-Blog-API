@@ -3,6 +3,7 @@ import { useState , useEffect } from 'react'
 
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+// import { C } from 'vitest/dist/chunks/reporters.QZ837uWx.js';
 
 function LogIn(){
 
@@ -17,14 +18,19 @@ function LogIn(){
   const [loading, setLoading] = useState(true);
 
    async function checkIfLoggedIn(){
+
+      const token = localStorage.getItem('jwtToken')
         try{
             console.log("trying to get data....")
             const response = await fetch("http://localhost:3003/api/me",{
                 credentials: 'include', // IMPORTANT
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': `bearer ${token}`
+                },
             })
             const data = await response.json();
-            console.log(data)
+            console.log("data:", data)
             if (response.ok){
                 if (data.loggedIn)
                     setloginState(data.loggedIn)
@@ -33,7 +39,7 @@ function LogIn(){
                 }
             }
             else{
-                console.log("failed to get form server")
+                console.log("failed to get from server")
             }
             setLoading(false);
             
@@ -43,9 +49,10 @@ function LogIn(){
         }
     }
 
-    useEffect(()=>{
-        checkIfLoggedIn();
-    }, [])
+    // useEffect(()=>{
+    //     checkIfLoggedIn();
+    // }, [])
+
 
   const navigate = useNavigate();
 
@@ -58,7 +65,7 @@ function LogIn(){
           credentials: 'include', // IMPORTANT
 
           headers:{
-            'Content-Type':'application/json',
+            'Content-Type':'application/json'
           },
           body: JSON.stringify({username, password}),
 
@@ -67,6 +74,10 @@ function LogIn(){
         const data = await response.json();
         console.log(data)
         if (response.ok){
+          const token = data.token;
+          localStorage.setItem('jwtToken', token);
+          console.log(token)
+
           navigate('/profile');
         }else{
           setLoginMsg(data.message);

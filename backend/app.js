@@ -23,17 +23,16 @@ app.use(express.urlencoded({ extended: true })) //POST data sent in req body
 app.use(express.json()); // forgot to use this to send json adnr ecieve it
 
 
-// session related
-app.use(session({ 
-    secret: "cats", 
-    resave: false, 
-    saveUninitialized: true,
-cookie:{
-    maxAge: 1000 * 60 * 60 * 24
-} }));
+// OLD session related stuff 
+// app.use(session({ 
+//     secret: "cats", 
+//     resave: false, 
+//     saveUninitialized: true,
+// cookie:{
+//     maxAge: 1000 * 60 * 60 * 24
+// } }));
 
-
-app.use(passport.session());
+// app.use(passport.session());
 require("./config/passport"); // Just require it to run its setup
 
 
@@ -56,6 +55,15 @@ app.get("/api",(req,res)=>{
     res.json("hissfsfsf");
 });
 
+// app.post('/api/me', passport.authenticate('jwt', { session: false }),
+//     function(req, res) {
+//       console.log("auth")
+//         // res.send(req.user.profile);
+//           res.json({message:"is authenticated", loggedIn:true})
+//     }
+// );
+
+function 
 
 app.get("/api/me",(req,res)=>{ 
   console.log("api/me requested")

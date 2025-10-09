@@ -7,7 +7,7 @@ const { loginUserPassport , createUser, logOut, loginUser}  = require("../contro
 usersRouter.get("/:userid", (req,res)=>{
     res.json("hi");
 })
-usersRouter.post('/login',  loginUserPassport);
+usersRouter.post('/login',  loginUser);
 
 usersRouter.post("/signup", createUser);
 

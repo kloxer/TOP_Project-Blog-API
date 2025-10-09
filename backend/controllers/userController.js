@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken'); //jwt import
 
 async function loginUser (req,res)  {
     try{
-        const user = await db.loginUser(req.body.username)
+      console.log(req.body)
+        const user = await db.findUser(req.body.username)
+        console.log(user);
         if (!user){
             return res.status(404).json({error: "User not found!"})
         }
@@ -15,18 +17,19 @@ async function loginUser (req,res)  {
         if (!isValidPwd){
             return res.status(401).json({error: "Incorrect password!"})
         }
-        console.log("SSUCCESSSSSSS")
-         res.status(201).json({message: "Logged in!", token:token})
 
-        // jwt.sign({user:username}, 'cats', (err, token) =>{
-        //   console.log(token);
-        //   return res.status(201).json({message: "Logged in!", token:token})
-        // });
+        //Jwt sign token
+        jwt.sign({user:user}, 'cats', (err, token) =>{
+          console.log(token);
+          return res.status(201).json({message: "Logged in!", token:token})
+        });
+
+          // return res.status(201).json({message: "Logged in!"})
+
     }
     catch(err){
         return res.status(400).json({error:err});
     }
-    res.status(500).json({ error: 'Internal server error' });
 }
 
 async function loginUserPassport(req,res,next){
