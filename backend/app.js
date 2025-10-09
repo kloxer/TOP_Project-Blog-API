@@ -12,6 +12,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const cors = require('cors');
 const usersRouter = require("./routes/users");
+const { ExtractJwt } = require("passport-jwt");
 
 app.use(cors({
   origin: "http://localhost:5173", // your React frontend
@@ -46,8 +47,10 @@ require("./config/passport"); // Just require it to run its setup
 //   next();
 // });
 
-app.get("/",(req,res)=>{
+app.post("/",(req,res)=>{
+  console.log(req.body)
   res.json("hi")
+  
 })
 
 app.get("/api",(req,res)=>{ 
@@ -55,28 +58,48 @@ app.get("/api",(req,res)=>{
     res.json("hissfsfsf");
 });
 
-// app.post('/api/me', passport.authenticate('jwt', { session: false }),
-//     function(req, res) {
-//       console.log("auth")
-//         // res.send(req.user.profile);
-//           res.json({message:"is authenticated", loggedIn:true})
-//     }
-// );
+app.post('/api/me', passport.authenticate('jwt', { session: false }), (req,res)=>{
+      console.log(req.user)
+        // res.send(req.user.profile);
+          res.json({message:"is authenticated", loggedIn:true})
+}
+);
 
-function 
 
-app.get("/api/me",(req,res)=>{ 
-  console.log("api/me requested")
-  if (req.isAuthenticated()){
-    console.log("autehnticated")
-    res.json({message:"is authenticated", loggedIn:true})
+//Using plain JWT to authenticate
+const jwt = require('jsonwebtoken'); //jwt import
+function  authenticateToken(req,res,next){
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(" ")[1]
+
+  if (token == null){
+    return res.sendStatus(401)
   }
-  else{
-    console.log("not authenticated")
-    res.json({message:"not logged in", loggedIn:false})
-  }
+  jwt.verify(token, 'cats', (err, user)=>{
+    if (err){
+      return res.sendStatus(403)
+    }
+    req.user=  user
+    next()
+  })
+}
+app.get("/api/me2", authenticateToken, (req,res)=>{ //using JWT middleware 
+  res.json(req.user)
+})
 
-});
+
+// app.get("/api/me",(req,res)=>{ 
+//   console.log("api/me requested")
+//   if (req.isAuthenticated()){
+//     console.log("authenticated")
+//     res.json({message:"is authenticated", loggedIn:true})
+//   }
+//   else{
+//     console.log("not authenticated")
+//     res.json({message:"not logged in", loggedIn:false})
+//   }
+
+// });
 
 
 app.use("/users", usersRouter);

@@ -6,6 +6,7 @@ const passport = require("passport"); // Adjust path as needed
 const jwt = require('jsonwebtoken'); //jwt import
 
 async function loginUser (req,res)  {
+  console.log("trying...")
     try{
       console.log(req.body)
         const user = await db.findUser(req.body.username)
