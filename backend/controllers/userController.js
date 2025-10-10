@@ -20,7 +20,7 @@ async function loginUser (req,res)  {
         }
 
         //Jwt sign token
-        jwt.sign({user:user}, 'cats', (err, token) =>{
+        jwt.sign({sub:user.id}, 'cats', (err, token) =>{
           console.log(token);
           return res.status(201).json({message: "Logged in!", token:token})
         });

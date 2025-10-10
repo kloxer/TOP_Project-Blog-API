@@ -90,11 +90,11 @@ function LogIn(){
   };
 
   
-if (loading) return(<><p>Loading</p></>)
-if (loginState) return (<>
-<h2>Already logged in</h2>
-<Link to="/"> return back</Link>
-</>);
+// if (loading) return(<><p>Loading</p></>)
+// if (loginState) return (<>
+// <h2>Already logged in</h2>
+// <Link to="/"> return back</Link>
+// </>);
 
     return(
         <>

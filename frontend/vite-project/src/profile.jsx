@@ -10,20 +10,28 @@ function Profile(){
     const [userPresent, setUserPresent] = useState(false);
 
 
-
+    const [user, setUser] = useState(null)
     const [msgTest, setMsgTest] = useState('d');
 
     async function getUserInfo(){
         try{
-            const response = await fetch("http://localhost:3003/api/me",{
+            const token = localStorage.getItem('jwtToken')
+            const response = await fetch("http://localhost:3003/api/me3",{
                 credentials: 'include', // IMPORTANT
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' ,
+                'Authorization': `bearer ${token}`
+
+                },
             })
             const data = await response.json();
             console.log(data)
             if (response.ok){
-                if (data.loggedIn)
-                    setMsgTest(data.message)
+                if (data.loggedIn){
+               setMsgTest(data.message)
+                    setUser(data.user)
+                    console.log(data)
+                }
+
                 else{
                     setMsgTest(data.message)
                 }
@@ -56,7 +64,7 @@ function Profile(){
         <h2>Welcome to  your profile</h2>
         {msgTest}
         <p>{userid} {username} {email}</p>
-
+        <p>{user}</p>
         <Link to="/">Return home</Link>
     </div>
     

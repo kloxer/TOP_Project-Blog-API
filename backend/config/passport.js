@@ -6,7 +6,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs')
 const db = require("../models/dbController")
 
-
+const user = db
 // passport.use(
 //   new LocalStrategy(async (username, password, done) => {
 //     try {
@@ -52,19 +52,23 @@ opts.secretOrKey = 'cats';
 // opts.issuer = 'accounts.examplesoft.com';
 // opts.audience = 'yoursite.net';
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
+passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
+
+    try {
+      const user = await db.findUserById(jwt_payload.sub);
         if (user) {
             return done(null, user);
         } else {
             return done(null, false);
             // or you could create a new account
         }
-    });
-}));
+         }
+         catch(err){
+          return done(err,false);
+         }
+
+    }));
+
 
 
 module.exports = passport;

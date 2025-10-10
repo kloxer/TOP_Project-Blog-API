@@ -13,12 +13,13 @@ async function findUser(username){
 }
 
 async function findUserById(id){
-
+  console.log(id);
     const user = await prisma.user.findUnique({
         where:{
             id: id,
         }
     })
+    console.log(user)
     return user;
 }
 
