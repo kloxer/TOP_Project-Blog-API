@@ -118,7 +118,7 @@ if (loginState) return (<>
 
       </form>
     <h2> 
-      <Link to="register">Register today</Link>
+      <Link to="/register">Register today</Link>
       </h2>
 </div>
         
