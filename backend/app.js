@@ -12,6 +12,9 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const cors = require('cors');
 const usersRouter = require("./routes/users");
+const blogsRouter = require("./routes/blogs");
+
+
 const { ExtractJwt } = require("passport-jwt");
 
 app.use(cors({
@@ -108,6 +111,9 @@ app.get("/api/me2", authenticateToken, (req,res)=>{ //using JWT middleware
 
 
 app.use("/users", usersRouter);
+
+app.use("/blogs", blogsRouter);
+
 
 app.listen(3003, (err)=>{
     console.log("listening one")

@@ -66,6 +66,8 @@ function Profile(){
         <p>{userid} {username} {email}</p>
         <p>{user}</p>
         <Link to="/">Return home</Link>
+        <p>Blawgs</p>
+        <Link to="/create">Create a blog</Link>
     </div>
     
     </>
