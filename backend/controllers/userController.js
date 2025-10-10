@@ -82,12 +82,7 @@ async function createUser(req,res){
 }
 
  function logOut(req,res,next){
-    req.logout((err) => {
-        if (err) {
-        return next(err);
-        }
-        res.status(201).json({message:"Logged Out!"});
-    });
+    res.status(200).json({ message: "Logged out" });
 }
 
 module.exports = { loginUser, loginUserPassport, createUser, logOut }

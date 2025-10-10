@@ -58,14 +58,17 @@ app.get("/api",(req,res)=>{
     res.json("hissfsfsf");
 });
 
-app.get('/api/me3', passport.authenticate('jwt', { session: false }), (req,res)=>{
-      console.log(req.user)
-      console.log("sending...")
-        // res.send(req.user.profile);
-          res.status(200).json({message:"is authenticated", user:req.user})
-}
-);
-
+app.get('/api/me3', (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(401).json({ message: "Unauthorized", info });
+    }
+    req.user = user;
+    return next();
+  })(req, res, next);
+}, (req, res) => {
+  res.status(200).json({ message: "is authenticated", user: req.user });
+});
 
 //Using plain JWT to authenticate
 const jwt = require('jsonwebtoken'); //jwt import

@@ -19,10 +19,11 @@ function LogIn(){
 
    async function checkIfLoggedIn(){
 
-      const token = localStorage.getItem('jwtToken')
         try{
+                const token = localStorage.getItem('jwtToken')
+
             console.log("trying to get data....")
-            const response = await fetch("http://localhost:3003/api/me",{
+            const response = await fetch("http://localhost:3003/api/me3",{
                 credentials: 'include', // IMPORTANT
                 headers: { 
                   'Content-Type': 'application/json',
@@ -32,15 +33,12 @@ function LogIn(){
             const data = await response.json();
             console.log("data:", data)
             if (response.ok){
-                if (data.loggedIn)
-                    setloginState(data.loggedIn)
-                else{
-                    setloginState(data.loggedIn)
-                }
+                setloginState(true)
             }
             else{
                 console.log("failed to get from server")
             }
+            console.log("not OK")
             setLoading(false);
             
         }
@@ -49,9 +47,9 @@ function LogIn(){
         }
     }
 
-    // useEffect(()=>{
-    //     checkIfLoggedIn();
-    // }, [])
+    useEffect(()=>{
+        checkIfLoggedIn();
+    }, [])
 
 
   const navigate = useNavigate();
@@ -90,11 +88,11 @@ function LogIn(){
   };
 
   
-// if (loading) return(<><p>Loading</p></>)
-// if (loginState) return (<>
-// <h2>Already logged in</h2>
-// <Link to="/"> return back</Link>
-// </>);
+if (loading) return(<><p>Loading</p></>)
+if (loginState) return (<>
+<h2>Already logged in</h2>
+<Link to="/"> return back</Link>
+</>);
 
     return(
         <>

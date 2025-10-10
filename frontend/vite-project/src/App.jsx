@@ -36,24 +36,28 @@ function App() {
 // }, []);
 
 
+  
    async function checkIfLoggedIn(){
+
         try{
+                const token = localStorage.getItem('jwtToken')
+
             console.log("trying to get data....")
-            const response = await fetch("http://localhost:3003/api/me",{
+            const response = await fetch("http://localhost:3003/api/me3",{
                 credentials: 'include', // IMPORTANT
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': `bearer ${token}`
+                },
             })
             const data = await response.json();
-            console.log(data)
+            console.log("data:", data)
             if (response.ok){
-                if (data.loggedIn)
-                    setloginState(data.loggedIn)
-                else{
-                    setloginState(data.loggedIn)
-                }
+                setloginState(true)
             }
             else{
-                console.log("failed to get form server")
+                setloginState(false);
+                console.log("failed to get from server")
             }
             
         }
@@ -83,6 +87,8 @@ function App() {
 
       if (response.ok){
         setloginState(false);
+        console.log(data)
+        localStorage.removeItem('jwtToken');
       }
     }
     catch(err){
