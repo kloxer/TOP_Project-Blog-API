@@ -22,6 +22,7 @@ async function postBlog(req,res){
 async function getAllBlogs(req,res){
     try{
         const blogs = await db.getUserBlogs(req.user.id)
+
         return res.status(201).json({message:"blogs found", blogs:blogs})
 
     }
@@ -31,6 +32,10 @@ async function getAllBlogs(req,res){
 
     }
 }
+
+async function getBlog(req,res){
+    console.log(req.params)
+}
 module.exports={
-    postBlog, getAllBlogs
+    postBlog, getAllBlogs, getBlog
 }
