@@ -29,11 +29,12 @@ enum Role {
 }
 
 model Post {
-  id         Int        @id
+  id         String     @id @default(cuid())
   createdAt  DateTime   @default(now())
-  title      String
+  title      String     
   content    String
   published  Boolean    @default(false)
   author     User       @relation(fields: [authorId], references: [id])
   authorId   Int
+  @@unique([title, authorId]) // Unique only per user
 }

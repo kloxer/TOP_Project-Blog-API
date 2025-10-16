@@ -7,6 +7,7 @@ import Register from './register.jsx';
 import Profile from './profile.jsx';
 import LogIn from './login.jsx';
 import CreateBlogPage from './createBlog.jsx';
+import ShowBlogs from './blogs.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path:"create",
     element:<CreateBlogPage />
+  },
+  {
+    path:"blogs",
+    element:<ShowBlogs />
   }
 ]);
 

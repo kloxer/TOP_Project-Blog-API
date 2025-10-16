@@ -38,7 +38,7 @@ app.use(express.json()); // forgot to use this to send json adnr ecieve it
 
 // app.use(passport.session());
 require("./config/passport"); // Just require it to run its setup
-
+require('dotenv').config();
 
 //Test api endpoint
 

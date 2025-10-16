@@ -67,7 +67,12 @@ function Profile(){
         <p>{user}</p>
         <Link to="/">Return home</Link>
         <p>Blawgs</p>
-        <Link to="/create">Create a blog</Link>
+        <Link to="/create">Create a blog</Link> 
+
+                <p>
+                    <Link to="/blogs">Show all blogs</Link>
+                </p>
+
     </div>
     
     </>

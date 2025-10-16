@@ -7,10 +7,7 @@ const blogsController = require("../controllers/blogsController")
 
 require("../config/passport"); // Just require it to run its setup
 
-blogsRouter.get("/", (req,res)=>{
-
-    res.send("hi")
-})
+blogsRouter.get("/", passport.authenticate('jwt', { session: false }), blogsController.getAllBlogs)
 
 blogsRouter.post("/", passport.authenticate('jwt', { session: false }), blogsController.postBlog);
 

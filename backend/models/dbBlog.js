@@ -2,17 +2,29 @@ const { PrismaClient } = require('../generated/prisma')
 
 const prisma = new PrismaClient()
 
-import { nanoid } from 'nanoid';
+// const { nanoid } = require('nanoid'); //using cuid from prisma
 
-async function createBlog(userId, blogTitle, blogContent){
+async function createBlog(userId, blogTitle, blogContent ,draft){
     //Will auto issue a time created, inside my schema 
+    console.log(draft)
+    const existingPost = await prisma.post.findUnique({
+  where: {
+    title_authorId: {
+      title: blogTitle,
+      authorId: userId,
+    },
+  },
+});
+
+    if (existingPost){
+        throw new Error("A post with this title already exists");
+    }
 
     const post = await prisma.post.create({
         data:{
-            id: nanoid(),
-            blogTitle: blogTitle,
-            blogContent: blogContent,
-            published: true,
+            title: blogTitle,
+            content: blogContent,
+            published: draft,
             authorId: userId
         }
     })
@@ -22,4 +34,19 @@ async function createBlog(userId, blogTitle, blogContent){
 
 }
 
-module.exports ={ createBlog }
+
+async function getUserBlogs(userId) {
+
+    const blogs = await prisma.post.findMany({
+        where:{
+            authorId:userId
+        },
+        orderBy:{
+            createdAt:'desc',
+        }
+    })
+    return blogs;
+    
+}
+
+module.exports ={ createBlog, getUserBlogs }

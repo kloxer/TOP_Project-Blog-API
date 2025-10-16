@@ -52,3 +52,9 @@ button{
   border-style: solid;
   border-color: black;
 }
+
+
+.blog{
+  border-style: solid;
+  margin:20px 20px;
+}
