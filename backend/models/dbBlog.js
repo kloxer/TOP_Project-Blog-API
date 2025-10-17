@@ -69,4 +69,7 @@ async function getSingleBlog(blogId){
     return blogs;
 }
 
+async function updateBlog(userId, blogId, title, content){
+    
+}
 module.exports ={ createBlog, getUserBlogs, getSingleBlog }

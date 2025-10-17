@@ -45,6 +45,6 @@ model Comment{
   createdAt  DateTime   @default(now())
   name String
   content String
-  postId String
+  postId String 
   post Post @relation(fields:[postId], references: [id],  onDelete: Cascade)
 }

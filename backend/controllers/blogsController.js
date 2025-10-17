@@ -40,13 +40,22 @@ async function getBlog(req,res){
         const id = req.params.id
         const blog = await db.getSingleBlog(id);
         console.log(blog)
-    return res.status(201).json({message:"Blog sent", blog:blog})
+        return res.status(201).json({message:"Blog sent", blog:blog})
     }
     catch(err){
         console.log(err)
         return res.status(400).json({message:"Server error"})
     }
 }
+
+async function updateBlog(req,res){
+    //First we wnat to make sure the blog belongs to the owner updating it
+
+}
+
+async function deleteBlog(req,res){
+    
+}
 module.exports={
-    postBlog, getAllBlogs, getBlog
+    postBlog, getAllBlogs, getBlog, updateBlog, deleteBlog
 }

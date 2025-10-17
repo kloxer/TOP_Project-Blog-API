@@ -15,9 +15,15 @@ blogsRouter.post("/", passport.authenticate('jwt', { session: false }), blogsCon
 
 blogsRouter.get("/:id", passport.authenticate('jwt', { session: false }), blogsController.getBlog);
 
+
+blogsRouter.put("/:id", passport.authenticate('jwt', { session: false }), blogsController.updateBlog);
+
+blogsRouter.delete("/:id", passport.authenticate('jwt', { session: false }), blogsController.deleteBlog);
+
+
 //Adding Comment
 
-blogsRouter.get("/:id/comments", commentController.showComments)
+// blogsRouter.get("/:id/comments", commentController.showComments)
 
 blogsRouter.post("/:id/comments", commentController.addComment)
 
