@@ -8,6 +8,7 @@ import Profile from './profile.jsx';
 import LogIn from './login.jsx';
 import CreateBlogPage from './createBlog.jsx';
 import ShowBlogs from './blogs.jsx';
+import SingleBlogPage from './pages/SingleBlogPage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path:"blogs",
     element:<ShowBlogs />
+  },
+  {
+    path:"blogs/:id",
+    element:<SingleBlogPage />
   }
 ]);
 

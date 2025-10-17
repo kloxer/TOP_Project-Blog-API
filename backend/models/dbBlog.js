@@ -49,4 +49,13 @@ async function getUserBlogs(userId) {
     
 }
 
-module.exports ={ createBlog, getUserBlogs }
+async function getSingleBlog(blogId){
+    const blogs = await prisma.post.findUnique({
+        where:{
+            id:blogId
+        }
+    })
+    return blogs;
+}
+
+module.exports ={ createBlog, getUserBlogs, getSingleBlog }

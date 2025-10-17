@@ -34,7 +34,18 @@ async function getAllBlogs(req,res){
 }
 
 async function getBlog(req,res){
-    console.log(req.params)
+    console.log(req.params.id)
+    console.log("here")
+    try{
+        const id = req.params.id
+        const blog = await db.getSingleBlog(id);
+        console.log(blog)
+    return res.status(201).json({message:"Blog sent", blog:blog})
+    }
+    catch(err){
+        console.log(err)
+        return res.status(400).json({message:"Server error"})
+    }
 }
 module.exports={
     postBlog, getAllBlogs, getBlog

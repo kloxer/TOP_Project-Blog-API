@@ -47,7 +47,7 @@ function ShowBlogs(){
   blogs.map(blog => (
     <div key={blog.id} className="blog">
 
-      <h2>title: <Link to={blog.id} >sds</Link>{blog.title}</h2>
+      <h2><Link to={blog.id} > {blog.title} </Link></h2>
       <p>content: {blog.content}</p>
     </div>
   ))

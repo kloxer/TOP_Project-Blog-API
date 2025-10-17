@@ -11,4 +11,6 @@ blogsRouter.get("/", passport.authenticate('jwt', { session: false }), blogsCont
 
 blogsRouter.post("/", passport.authenticate('jwt', { session: false }), blogsController.postBlog);
 
+blogsRouter.get("/:id", passport.authenticate('jwt', { session: false }), blogsController.getBlog);
+
 module.exports = blogsRouter
