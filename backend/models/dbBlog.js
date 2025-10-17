@@ -53,7 +53,18 @@ async function getSingleBlog(blogId){
     const blogs = await prisma.post.findUnique({
         where:{
             id:blogId
-        }
+        },
+        include: {
+            comment: {
+                select:{
+                    name:true,
+                    content:true,
+                },
+                orderBy:{
+                    createdAt:'desc'
+                }
+            }
+        }   
     })
     return blogs;
 }

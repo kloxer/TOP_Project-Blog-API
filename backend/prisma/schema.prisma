@@ -36,5 +36,15 @@ model Post {
   published  Boolean    @default(false)
   author     User       @relation(fields: [authorId], references: [id])
   authorId   Int
+  comment Comment[]
   @@unique([title, authorId]) // Unique only per user
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  name String
+  content String
+  postId String
+  post Post @relation(fields:[postId], references: [id],  onDelete: Cascade)
 }
