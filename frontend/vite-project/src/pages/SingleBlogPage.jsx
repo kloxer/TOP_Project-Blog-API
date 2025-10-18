@@ -11,11 +11,8 @@ function SingleBlogPage(){
 
     const [name, setName] = useState("");
     const [comment, setComment] = useState("");
-
     const [allComments, setallComments] = useState([]);
-
-
-
+    
     async function getBlog(){
 
         try{

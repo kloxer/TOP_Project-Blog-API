@@ -36,6 +36,39 @@ function ShowBlogs(){
     useEffect(()=>{
         getBlogs();
     }, [])
+
+
+
+    async function deleteBlog(id){
+      try{
+            const token = localStorage.getItem('jwtToken')
+            const response = await fetch(`http://localhost:3003/blogs/${id}`, {
+                method:'DELETE',
+                headers:{
+                    'Content-Type':'application/json',
+                        'Authorization': `bearer ${token}`
+                },
+                credentials:'include'
+            });
+            const data = response.json()
+            if (response.ok){
+              setMessage(data.message)
+              console.log("sucess")
+
+         setBlogs((prevBlogs) => prevBlogs.filter(blog => blog.id !== id));
+
+            }
+            else{
+              console.log("delete");
+            }
+
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+
+
     return (
     <> 
    <h1>blogs!</h1>
@@ -50,9 +83,11 @@ function ShowBlogs(){
       <div key={blog.id} className="blog">
         <h2><Link to={blog.id} > {blog.title} </Link></h2>
         <p>content: {blog.content}</p>
+
+               <button><Link to={`${blog.id}/update`}>Update</Link>  </button>
+              <button  onClick={() => deleteBlog(blog.id)}>delete</button>
+
       </div>
-      <button>update</button>
-      <button>delete</button>
     </div>
   ))
 )}
