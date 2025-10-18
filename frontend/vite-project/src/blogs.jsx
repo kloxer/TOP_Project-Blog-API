@@ -45,10 +45,14 @@ function ShowBlogs(){
   <p>No blogs found.</p>
 ) : (
   blogs.map(blog => (
-    <div key={blog.id} className="blog">
 
-      <h2><Link to={blog.id} > {blog.title} </Link></h2>
-      <p>content: {blog.content}</p>
+    <div>
+      <div key={blog.id} className="blog">
+        <h2><Link to={blog.id} > {blog.title} </Link></h2>
+        <p>content: {blog.content}</p>
+      </div>
+      <button>update</button>
+      <button>delete</button>
     </div>
   ))
 )}

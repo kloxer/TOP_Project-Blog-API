@@ -40,6 +40,7 @@ model Post {
   @@unique([title, authorId]) // Unique only per user
 }
 
+
 model Comment{
   id Int @id @default(autoincrement())
   createdAt  DateTime   @default(now())

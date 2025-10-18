@@ -69,7 +69,31 @@ async function getSingleBlog(blogId){
     return blogs;
 }
 
-async function updateBlog(userId, blogId, title, content){
+async function updateBlog(userId, blogId, title, content, draft){
     
+    const blog = await prisma.post.update({
+        where:{
+            id:blogId,
+            authorId: userId
+        },
+        data:{
+            title: title,
+            content: content,
+            published: draft,
+        }
+    })
+    console.log(blog)
+    return blog
 }
-module.exports ={ createBlog, getUserBlogs, getSingleBlog }
+
+async function deleteBlog(userId, blogId){
+    const deletedBlog = await prisma.post.delete({
+        where:{
+            id:blogId,
+            authorId:userId
+        }
+    })
+    return deletedBlog;
+}
+
+module.exports ={ createBlog, getUserBlogs, getSingleBlog, updateBlog, deleteBlog }

@@ -50,11 +50,30 @@ async function getBlog(req,res){
 
 async function updateBlog(req,res){
     //First we wnat to make sure the blog belongs to the owner updating it
-
+    console.log(req.user)
+    console.log(req.body)
+    try{
+        const userId= req.user.id;
+        const blogId = req.params.id;
+        const title = req.body.title;
+        const content = req.body.content;
+        const draft = req.body.draft;
+        const blog = await db.updateBlog(userId, blogId, title, content, draft)
+        return res.status(201).json({message:"Sucess", blog:blog})
+    }
+    catch(err){
+        return res.status(400).json({message:"Server err"})
+    }
 }
 
 async function deleteBlog(req,res){
-    
+    try{
+        const deletedBlog = await db.deleteBlog(req.user.id, req.params.id)
+        return res.status(201).json({message:"blog delted", blog:deletedBlog})
+    }
+    catch(err){
+        return res.status(400).json({message:"blog not deleted"})
+    }
 }
 module.exports={
     postBlog, getAllBlogs, getBlog, updateBlog, deleteBlog
