@@ -13,6 +13,8 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 // import UpdateBlog from './pages/UpdateBlog.jsx';
 import Layout from './layout/Layout.jsx';
 import Home from './pages/Home.jsx';
+import LoginPage from './pages/Login.jsx';
+import {  AuthProvider } from "./components/AuthContext.jsx";  // Named imports
 
 const router = createBrowserRouter([
 {
@@ -20,9 +22,14 @@ const router = createBrowserRouter([
   element: <Layout />,
   children:[
   {
-    index:true, element: <Home />
+    index:true, element: <Home />,
+      },
+  {
+      path:"login", element:<LoginPage />
   }
   ]
+
+
 }
 
 ])
@@ -65,6 +72,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
+    <AuthProvider>
         <RouterProvider router={router} />
+    </AuthProvider>
+    
   </StrictMode>,
 )
