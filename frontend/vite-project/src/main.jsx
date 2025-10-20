@@ -15,6 +15,9 @@ import Layout from './layout/Layout.jsx';
 import Home from './pages/Home.jsx';
 import LoginPage from './pages/Login.jsx';
 import {  AuthProvider } from "./components/AuthContext.jsx";  // Named imports
+import MyBlogs from './pages/MyBlogs.jsx';
+
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const router = createBrowserRouter([
 {
@@ -26,6 +29,9 @@ const router = createBrowserRouter([
       },
   {
       path:"login", element:<LoginPage />
+  },
+  {
+    path:"myBlogs", element:<ProtectedRoute><MyBlogs /> </ProtectedRoute>
   }
   ]
 
@@ -76,6 +82,6 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
         <RouterProvider router={router} />
     </AuthProvider>
-    
+
   </StrictMode>,
 )

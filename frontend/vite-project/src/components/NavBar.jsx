@@ -8,53 +8,53 @@ function NavBar(){
     const [user,setUser] = useState(null);
     const [isLoggedIn, setisLoggedIn] = useState(false);
   const navigate = useNavigate();
+
      const { logout , loading, token} = useAuth();
 
-   async function checkIfLoggedIn(token){
-        try{
-            console.log("trying to get data....")
-            const response = await fetch("http://localhost:3003/api/me2",{
-                credentials: 'include', // IMPORTANT
-                headers: { 
-                  'Content-Type': 'application/json',
-                  'Authorization': `bearer ${token}`
-                },
-            })
-            const data = await response.json();
-            console.log("data:", data)
-            if (response.ok){
-                setUser(data.user)
-                setisLoggedIn(true)
-            }
-            else{
-                console.log("failed to get from server")
-                setisLoggedIn(false)
-            }
+//    async function checkIfLoggedIn(token){
+//         try{
+//             console.log("trying to get data....")
+//             const response = await fetch("http://localhost:3003/api/me2",{
+//                 credentials: 'include', // IMPORTANT
+//                 headers: { 
+//                   'Content-Type': 'application/json',
+//                   'Authorization': `bearer ${token}`
+//                 },
+//             })
+//             const data = await response.json();
+//             console.log("data:", data)
+//             if (response.ok){
+//                 setUser(data.user)
+//                 setisLoggedIn(true)
+//             }
+//             else{
+//                 console.log("failed to get from server")
+//                 setisLoggedIn(false)
+//             }
 
-        }
-        catch(err){
+//         }
+//         catch(err){
 
-            console.log(err);
-        }
+//             console.log(err);
+//         }
 
-    }
+//     }
 
-    useEffect(()=>{
-            const token = localStorage.getItem('jwtToken')
-            if (token){
-                setisLoggedIn(true);
+//     useEffect(()=>{
+//             const token = localStorage.getItem('jwtToken')
+//             if (token){
+//                 setisLoggedIn(true);
 
-                checkIfLoggedIn(token);
-            }
-            else{
-                setisLoggedIn(false)
-            }
-        checkIfLoggedIn();
-    }, [])
+//                 checkIfLoggedIn(token);
+//             }
+//             else{
+//                 setisLoggedIn(false)
+//             }
+//         checkIfLoggedIn();
+//     }, [])
 
 
    function logOut() {
-    alert("here")
     // localStorage.removeItem('jwtToken');
     logout(); //from AuthContext
     setUser(null);
@@ -68,7 +68,7 @@ function NavBar(){
         <ul>
             <li><Link to="/">Home</Link></li>
 
-            <li><Link to="/blogs">My blogs</Link></li>
+            <li><Link to="/myBlogs">My blogs</Link></li>
             <li><Link to=" ">Create Blog</Link></li>
 
             {token ? (
