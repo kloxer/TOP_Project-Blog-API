@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 
 function MyBlogs(){
 
@@ -85,7 +85,7 @@ function MyBlogs(){
         <h2><Link to={blog.id} > {blog.title} </Link></h2>
         <p>content: {blog.content}</p>
 
-               <button><Link to={`${blog.id}/update`}>Update</Link>  </button>
+               <Link to={`/myBlogs/${blog.id}/update`} state={blog}>Update</Link>  
               <button  onClick={() => deleteBlog(blog.id)}>delete</button>
 
       </div>

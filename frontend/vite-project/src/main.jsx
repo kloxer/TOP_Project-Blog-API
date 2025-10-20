@@ -19,6 +19,8 @@ import MyBlogs from './pages/MyBlogs.jsx';
 
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import CreateBlog from './components/CreateBlog.jsx';
+import UpdateBlog from './pages/UpdateBlog.jsx';
+import SingleBlogPage from './pages/SingleBlogPage.jsx';
 
 const router = createBrowserRouter([
 {
@@ -33,10 +35,18 @@ const router = createBrowserRouter([
   },
   {
     path:"myBlogs", element:<ProtectedRoute><MyBlogs /> </ProtectedRoute>
+
   },
   {
     path:"create", element:<ProtectedRoute><CreateBlog /> </ProtectedRoute>
-  }
+  },
+  {
+      path:"myBlogs/:id", element:<ProtectedRoute><SingleBlogPage /> </ProtectedRoute>
+  },
+  {
+      path:"myBlogs/:id/update", element:<ProtectedRoute><UpdateBlog /> </ProtectedRoute>
+  },
+
   ]
 
 

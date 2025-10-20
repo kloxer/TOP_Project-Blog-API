@@ -1,0 +1,173 @@
+:root{
+  --card-bg: #ffffff;
+  --accent: #3b82f6;
+  --muted: #6b7280;
+  --soft-shadow: 0 6px 18px rgba(23, 23, 23, 0.08);
+  --radius: 12px;
+  --gap: 28px;
+  --max-grid-width: 1600px;
+  --card-min-height: 280px;
+}
+
+.blog-grid{
+  display: grid;
+  gap: var(--gap);
+  align-items: start;
+  padding: 24px;
+  background: linear-gradient(180deg, var(--bg) 0%, #ffffff 60%);
+
+  max-width: var(--max-grid-width);
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  /* make rows consistent and let items stretch to fill the cell */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+  /* default 1 column on very small screens */
+  grid-template-columns: 1fr;
+  justify-items: stretch;
+}
+
+/* Card */
+.blog-card{
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--soft-shadow);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  border: 1px solid rgba(15, 23, 42, 0.03);
+  overflow: hidden;
+
+  /* center title/content/author */
+  align-items: center;
+  text-align: center;
+
+  /* make each card fill its grid cell */
+  min-height: var(--card-min-height);
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: none; /* let grid control width */
+}
+
+/* Hover / focus */
+.blog-card:hover,
+.blog-card:focus-within{
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* Title */
+.blog-card h2{
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: #0f172a;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Content with graceful truncation */
+.blog-card p{
+  margin: 0;
+  color: #111827;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  width: 100%;
+}
+
+/* Truncate content to more lines so bigger cards show more text */
+.blog-card p:nth-of-type(1){
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* show more lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+}
+
+/* Author and meta area */
+.author{
+  /* push author to the bottom for consistent placement across cards */
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+
+  /* center and greyed-out */
+  justify-content: center;
+  opacity: 0.65;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+}
+
+/* Optional avatar (if you add an <img class="avatar"> inside author) */
+.blog-card .avatar{
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(15,23,42,0.06);
+}
+
+/* Small action row placeholder */
+.blog-card .meta{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Responsive tweaks */
+/* On small screens keep single column cards */
+@media (max-width: 520px){
+  .blog-grid{
+    padding: 14px;
+    gap: 14px;
+  }
+  .blog-card{
+    padding: 14px;
+    max-width: none;
+  }
+}
+
+/* On medium+ screens prefer two columns so a 4-item list becomes a 2x2 grid */
+@media (min-width: 900px){
+  .blog-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+  }
+  .blog-card{
+    padding: 20px;
+  }
+}
+
+/* Responsive columns: 1 → 2 → 3 → 4 (keeps cards stable, prevents overlap) */
+@media (min-width: 600px){
+  .blog-grid{
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+  }
+}
+
+@media (min-width: 1000px){
+  .blog-grid{
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1400px){
+  .blog-grid{
+    grid-template-columns: repeat(4, minmax(280px, 1fr)); /* up to 4 cards per row */
+    gap: 32px;
+  }
+  .blog-card{
+    padding: 24px;
+  }
+}

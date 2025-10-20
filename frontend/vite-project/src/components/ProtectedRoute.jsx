@@ -3,8 +3,12 @@ import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, requiredRole }) => {
-  const { token } = useAuth();
+  const { token, loading } = useAuth();
 
+  if (loading) {
+    return <div>Loading...</div>;  // Or a spinner, or simply render nothing for now
+  }
+  
 //   if (!user || (requiredRole && !isAuthorized(requiredRole))) {
   if (!token) {
 

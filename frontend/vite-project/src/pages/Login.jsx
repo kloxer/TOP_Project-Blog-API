@@ -5,9 +5,9 @@ import useAuth from "../hooks/useAuth";
 
 function LoginPage(){
      const { token , login} = useAuth();
-     if (token){
-      return <Navigate to="/" replace />
-     }
+    //  if (token){
+    //   return <Navigate to="/" replace />
+    //  }
 
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');

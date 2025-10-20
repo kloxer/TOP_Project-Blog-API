@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
+import useAuth from "../hooks/useAuth";
+import { useLocation } from 'react-router-dom';
 
 function UpdateBlog(){
 
@@ -9,12 +11,15 @@ function UpdateBlog(){
         const [draft, setDraft] = useState(false)
         
         const {id} = useParams();
-        
+        const {token} = useAuth();
+
+        const location = useLocation(); // Get the state passed via Link
+          const blog = location.state; // Use passed state as initial form data
+                  console.log(blog)
 
         async function updateBlog(e){
             e.preventDefault()
             try{
-                const token = localStorage.getItem('jwtToken')
                 const response = await fetch(`http://localhost:3003/blogs/${id}`, {
                     method:'PUT',
                     headers:{
@@ -37,10 +42,10 @@ function UpdateBlog(){
             }
         }
 
-
     return(<>
     
     <form onSubmit={updateBlog}>
+        {blog ? blog.title : <p>hi</p> }
         <label htmlFor="title">Title : <input type="text" onChange={e=> setTitle(e.target.value)}/></label>
 
         <label htmlFor="Content">Content:  <input type="text"  onChange={e=> setContent(e.target.value)}/></label>

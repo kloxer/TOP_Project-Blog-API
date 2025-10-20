@@ -14,6 +14,7 @@ const cors = require('cors');
 const usersRouter = require("./routes/users");
 const blogsRouter = require("./routes/blogs");
 
+const blogsController = require("./controllers/blogsController")
 
 const { ExtractJwt } = require("passport-jwt");
 
@@ -114,6 +115,7 @@ app.use("/users", usersRouter);
 
 app.use("/blogs", blogsRouter);
 
+app.get("/allblogs",  blogsController.getAllUserPublicBlogs)
 
 app.listen(3003, (err)=>{
     console.log("listening one")

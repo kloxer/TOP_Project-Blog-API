@@ -49,6 +49,33 @@ async function getUserBlogs(userId) {
     
 }
 
+
+async function getAllUserPublicBlogsDb() {
+
+try {
+    const blogs = await prisma.post.findMany({
+      where: {
+        published: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include:{
+        author:{
+            select:{
+                username:true,
+            }
+        },
+      }
+    });
+    console.log(blogs);
+    return blogs;
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    throw new Error('Error fetching blogs from the database');
+  }
+}
+
 async function getSingleBlog(blogId){
     const blogs = await prisma.post.findUnique({
         where:{
@@ -96,4 +123,4 @@ async function deleteBlog(userId, blogId){
     return deletedBlog;
 }
 
-module.exports ={ createBlog, getUserBlogs, getSingleBlog, updateBlog, deleteBlog }
+module.exports ={ createBlog, getUserBlogs, getSingleBlog, updateBlog, deleteBlog, getAllUserPublicBlogsDb }

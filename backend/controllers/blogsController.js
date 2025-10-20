@@ -19,6 +19,19 @@ async function postBlog(req,res){
     }
 }
 
+async function getAllUserPublicBlogs(req,res){
+
+    try{
+        const blogs = await db.getAllUserPublicBlogsDb()
+        return res.status(201).json({message:"ALL blogs found", blogs:blogs})
+
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).json({message:err.message})
+
+    }
+}
 async function getAllBlogs(req,res){
     try{
         const blogs = await db.getUserBlogs(req.user.id)
@@ -76,5 +89,5 @@ async function deleteBlog(req,res){
     }
 }
 module.exports={
-    postBlog, getAllBlogs, getBlog, updateBlog, deleteBlog
+    postBlog, getAllBlogs, getBlog, updateBlog, deleteBlog, getAllUserPublicBlogs
 }
