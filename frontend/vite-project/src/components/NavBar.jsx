@@ -69,7 +69,7 @@ function NavBar(){
             <li><Link to="/">Home</Link></li>
 
             <li><Link to="/myBlogs">My blogs</Link></li>
-            <li><Link to=" ">Create Blog</Link></li>
+            <li><Link to="/create">Create Blog</Link></li>
 
             {token ? (
 
