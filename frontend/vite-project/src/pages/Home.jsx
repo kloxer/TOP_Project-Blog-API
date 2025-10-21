@@ -54,15 +54,16 @@ const MyBlogs = ({ blogs }) => {
               <h2 className="text-lg font-semibold text-gray-900 mb-3">
                 {blog.title}
               </h2>
-
+            <div className="mt-4 text-center text-sm text-gray-500 italic">
+              by {blog.author?.username ?? "Unknown"}
+            </div>
+            
               <p className="text-gray-700 text-sm leading-relaxed mb-4 max-h-40 overflow-hidden">
                 {blog.content}
               </p>
             </div>
 
-            <div className="mt-4 text-center text-sm text-gray-500 italic">
-              by {blog.author?.username ?? "Unknown"}
-            </div>
+
           </article>
         ))
       ) : (

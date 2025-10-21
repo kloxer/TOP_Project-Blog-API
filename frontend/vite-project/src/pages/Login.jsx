@@ -1,79 +1,92 @@
 import { useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
 
 function LoginPage(){
      const { token , login} = useAuth();
-    //  if (token){
-    //   return <Navigate to="/" replace />
-    //  }
+     if (token){
+      return <Navigate to="/" replace />
+     }
 
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
 
       
      async function handleSubmit(e){
-        e.preventDefault();  // Prevents form from reloading the page
+        e.preventDefault();
         try{
         const response = await fetch('http://localhost:3003/users/login', {
           method:'POST',
-          credentials: 'include', // IMPORTANT
-
+          credentials: 'include',
           headers:{
             'Content-Type':'application/json'
           },
           body: JSON.stringify({username, password}),
-
         });
         
         const data = await response.json();
-        console.log(data)
         if (response.ok){
           const token = data.token;
-        //   localStorage.setItem('jwtToken', token);
-          console.log(token)
-
-        login(token); //setting the token to authcontext
-
-         //   navigate('/profile');
+          login(token);
         }else{
-        //   setLoginMsg(data.message);
           console.log(data.message)
         }
       }
     catch(err){
       console.log('Error during login:', err);
-      // setError('An error occured while logging in');
     }
   };
 
-
 return (
+  <div className="min-h-screen flex items-start justify-center bg-gradient-to-b from-gray-50 to-white pt-16 pb-12 px-4">
+    <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
+      <h1 className="text-2xl font-semibold text-gray-900 mb-4 text-center">Welcome back</h1>
+      <p className="text-sm text-gray-500 mb-6 text-center">Sign in to your account</p>
 
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+            Username
+          </label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value={username}
+            onChange={(e)=> setUsername(e.target.value)}
+            required
+            className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+          />
+        </div>
 
-        <div className="loginPage">
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+          />
+        </div>
 
-            <h1>Log in page</h1>
-      <form onSubmit={handleSubmit}>
-      <h2>Log in</h2>
-
-      <label htmlFor="user">Username 
-      <input type="text" name="username"
-      onChange={(e)=> setUsername(e.target.value)}/></label>
-
-        <label htmlFor="password">Password 
-        <input type="password" name="password" 
-        onChange={(e) => setPassword(e.target.value)}
-                            /></label>
-
-      <button type="submit" >Log in</button>
-
+        <button
+          type="submit"
+          className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-md transition"
+        >
+          Log in
+        </button>
       </form>
-    <h2> 
-      <Link to="/register">Register today</Link>
-      </h2>
-</div>
+
+      <div className="mt-6 text-center text-sm text-gray-600">
+        Don't have an account? <Link to="/register" className="text-indigo-600 hover:underline">Register</Link>
+      </div>
+    </div>
+  </div>
 )
 }
 
