@@ -21,8 +21,10 @@ async function loginUser (req,res)  {
         }
 
         //Jwt sign token
+        
         jwt.sign({sub:user.id}, process.env.JWT_SECRET, (err, token) =>{
-          console.log(token);
+
+
           return res.status(201).json({message: "Success", token:token})
         });
 

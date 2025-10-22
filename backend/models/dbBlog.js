@@ -72,7 +72,6 @@ try {
         },
       }
     });
-    console.log(blogs);
     return blogs;
   } catch (error) {
     console.error('Error fetching blogs:', error);

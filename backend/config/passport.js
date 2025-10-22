@@ -44,6 +44,7 @@ const user = db
 
 require('dotenv').config();
 
+
 //JWT strategy
 var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
