@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 function LoginPage(){
      const { token , login} = useAuth();
+
      if (token){
       return <Navigate to="/" replace />
      }
@@ -11,7 +12,7 @@ function LoginPage(){
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
 
-      
+      const [message, setMessage] = useState(''); 
      async function handleSubmit(e){
         e.preventDefault();
         try{
@@ -27,13 +28,23 @@ function LoginPage(){
         const data = await response.json();
         if (response.ok){
           const token = data.token;
-          login(token);
+          setMessage(data.message);
+          
+        setTimeout(() => {
+          login(token);             // Set token AFTER delay
+        }, 3000)
+      
+
         }else{
           console.log(data.message)
+          setMessage(data.message);
+
         }
       }
     catch(err){
       console.log('Error during login:', err);
+        setMessage(err);
+
     }
   };
 
@@ -43,7 +54,19 @@ return (
       <h1 className="text-2xl font-semibold text-gray-900 mb-4 text-center">Welcome back</h1>
       <p className="text-sm text-gray-500 mb-6 text-center">Sign in to your account</p>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+    {message && (
+      <div
+        role="alert"
+        className={`mb-4 px-4 py-3 rounded-md text-sm border ${
+          message === 'Success'
+            ? 'bg-green-50 text-green-800 border-green-100'
+            : 'bg-red-50 text-red-800 border-red-100'
+        }`}
+      >
+        {message} 
+      </div>
+    )}      
+    <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
             Username

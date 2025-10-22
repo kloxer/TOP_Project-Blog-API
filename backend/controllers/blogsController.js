@@ -6,10 +6,10 @@ async function postBlog(req,res){
     const userId = req.user.id; // will probably have to attach user to request
     const blogTitle = req.body.title;
     const blogContent = req.body.content;
-    const draft = req.body.draft;
+    const publish = req.body.publish;
     //Now will have to paste to database, want to ensure 
     try{
-        const post = await db.createBlog(userId, blogTitle, blogContent, draft)
+        const post = await db.createBlog(userId, blogTitle, blogContent, publish)
         return res.status(201).json({message:"post created", post:post})
 
     }
@@ -70,8 +70,9 @@ async function updateBlog(req,res){
         const blogId = req.params.id;
         const title = req.body.title;
         const content = req.body.content;
-        const draft = req.body.draft;
-        const blog = await db.updateBlog(userId, blogId, title, content, draft)
+        const publish = req.body.publish;
+        
+        const blog = await db.updateBlog(userId, blogId, title, content, publish)
         return res.status(201).json({message:"Sucess", blog:blog})
     }
     catch(err){

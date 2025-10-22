@@ -18,9 +18,10 @@ import {  AuthProvider } from "./components/AuthContext.jsx";  // Named imports
 import MyBlogs from './pages/MyBlogs.jsx';
 
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import CreateBlog from './components/CreateBlog.jsx';
+import CreateBlog from './pages/CreateBlog.jsx';
 import UpdateBlog from './pages/UpdateBlog.jsx';
 import SingleBlogPage from './pages/SingleBlogPage.jsx';
+import Register from './pages/Register.jsx';
 
 const router = createBrowserRouter([
 {
@@ -41,11 +42,14 @@ const router = createBrowserRouter([
     path:"create", element:<ProtectedRoute><CreateBlog /> </ProtectedRoute>
   },
   {
-      path:"myBlogs/:id", element:<ProtectedRoute><SingleBlogPage /> </ProtectedRoute>
+      path:"/:id", element:<ProtectedRoute><SingleBlogPage /> </ProtectedRoute>
   },
   {
       path:"myBlogs/:id/update", element:<ProtectedRoute><UpdateBlog /> </ProtectedRoute>
   },
+  {
+    path:"register", element:<Register ></Register>
+  }
 
   ]
 

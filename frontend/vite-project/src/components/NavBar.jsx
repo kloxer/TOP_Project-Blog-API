@@ -35,7 +35,7 @@ function NavBar(){
             <div className="flex items-center gap-3">
               {token ? (
                 <>
-                  <Link to="/" className="hidden sm:inline text-sm text-gray-600 hover:text-gray-900">Profile</Link>
+                  {/* <Link to="/" className="hidden sm:inline text-sm text-gray-600 hover:text-gray-900">Profile</Link> */}
                   <button
                     onClick={logOut}
                     className="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 text-sm rounded-md border border-red-100 hover:bg-red-100"

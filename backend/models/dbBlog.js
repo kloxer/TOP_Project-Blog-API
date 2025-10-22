@@ -4,9 +4,8 @@ const prisma = new PrismaClient()
 
 // const { nanoid } = require('nanoid'); //using cuid from prisma
 
-async function createBlog(userId, blogTitle, blogContent ,draft){
+async function createBlog(userId, blogTitle, blogContent ,publish){
     //Will auto issue a time created, inside my schema 
-    console.log(draft)
     const existingPost = await prisma.post.findUnique({
   where: {
     title_authorId: {
@@ -20,14 +19,19 @@ async function createBlog(userId, blogTitle, blogContent ,draft){
         throw new Error("A post with this title already exists");
     }
 
-    const post = await prisma.post.create({
-        data:{
-            title: blogTitle,
-            content: blogContent,
-            published: draft,
-            authorId: userId
-        }
-    })
+
+
+const post = await prisma.post.create({
+  data: {
+    title: blogTitle,
+    content: blogContent,
+    published: publish,
+    authorId: userId,
+    createdAt: new Date(),
+    publishedAt: publish ? new Date() : null,
+  },
+});
+
 
     console.log(post)
     return post;
@@ -58,7 +62,7 @@ try {
         published: true,
       },
       orderBy: {
-        createdAt: 'desc',
+        publishedAt: 'desc',
       },
       include:{
         author:{
@@ -82,6 +86,11 @@ async function getSingleBlog(blogId){
             id:blogId
         },
         include: {
+                   author:{
+            select:{
+                username:true,
+            }
+        },
             comment: {
                 select:{
                     name:true,
@@ -96,7 +105,7 @@ async function getSingleBlog(blogId){
     return blogs;
 }
 
-async function updateBlog(userId, blogId, title, content, draft){
+async function updateBlog(userId, blogId, title, content, publish){
     
     const blog = await prisma.post.update({
         where:{
@@ -106,7 +115,9 @@ async function updateBlog(userId, blogId, title, content, draft){
         data:{
             title: title,
             content: content,
-            published: draft,
+            published: publish,
+            publishedAt: publish ? new Date() : null,
+
         }
     })
     console.log(blog)

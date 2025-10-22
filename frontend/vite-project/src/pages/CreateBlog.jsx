@@ -8,6 +8,7 @@ function CreateBlog() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [publish, setPublish] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,7 +24,7 @@ function CreateBlog() {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : undefined,
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content , publish:publish }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -90,6 +91,15 @@ function CreateBlog() {
                 className="inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-500 disabled:opacity-60 transition"
               >
                 {saving ? "Saving..." : "Publish"}
+              </button>
+
+                <button
+                type="submit"
+                disabled={saving}
+                onClick={()=> setPublish(false)}
+                className="inline-flex items-center px-5 py-2.5 bg-green-400 text-white font-medium rounded-md hover:bg-green-300 disabled:opacity-60 transition"
+              >
+                {saving ? "Saving..." : "Save as Draft"}
               </button>
 
               <button

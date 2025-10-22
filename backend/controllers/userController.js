@@ -12,24 +12,24 @@ async function loginUser (req,res)  {
         const user = await db.findUser(req.body.username)
         console.log(user);
         if (!user){
-            return res.status(404).json({error: "User not found!"})
+            return res.status(404).json({message: "User not found!"})
         }
         const isValidPwd=  await bcrypt.compare(req.body.password, user.password);
         if (!isValidPwd){
-            return res.status(401).json({error: "Incorrect password!"})
+            return res.status(401).json({message: "Incorrect password!"})
         }
 
         //Jwt sign token
         jwt.sign({sub:user.id}, 'cats', (err, token) =>{
           console.log(token);
-          return res.status(201).json({message: "Logged in!", token:token})
+          return res.status(201).json({message: "Success", token:token})
         });
 
           // return res.status(201).json({message: "Logged in!"})
 
     }
     catch(err){
-        return res.status(400).json({error:err});
+        return res.status(400).json({message:err});
     }
 }
 
