@@ -49,7 +49,7 @@ function UpdateBlog(){
         <label htmlFor="title">Title : <input type="text" onChange={e=> setTitle(e.target.value)}/></label>
 
         <label htmlFor="Content">Content:  <input type="text"  onChange={e=> setContent(e.target.value)}/></label>
-        <label htmlFor="draft">Draft: <input type="checkbox" onChange={e=> setDraft(e.target.value)} /></label>
+        <label htmlFor="Publish">Publish? <input type="checkbox" onChange={e=> setDraft(e.target.value)} /></label>
         <button>Submit</button>
     </form>
 

@@ -5,6 +5,7 @@ function MyBlogs(){
 
     const [blogs, setBlogs] = useState(null)
     const [message, setMessage]= useState("")
+    const [loading, setLoading] = useState(true);
 
     async function getBlogs(){
         try{
@@ -28,6 +29,9 @@ function MyBlogs(){
         catch(err){
             console.log(err)
             setMessage(String(err))
+        }
+        finally{
+            setLoading(false)
         }
     }
 
@@ -63,7 +67,7 @@ function MyBlogs(){
         setMessage(String(err))
       }
     }
-
+    
 
     return (
     <>
@@ -75,11 +79,32 @@ function MyBlogs(){
           </Link>
         </div>
 
-   
+        {loading ? (<div className="text-center py-12 text-gray-500">Loading...</div>) 
+        : (
 
-        {!blogs ? (
-          <div className="text-center py-12 text-gray-500">No blogs found.</div>
-        ) : (
+        <> 
+                {!blogs || blogs.length === 0 ? ( 
+                  <div className="text-center py-12 text-gray-500">No blogs found.</div>
+                ) : (
+                  
+                    <BlogGridDisplay blogs={blogs} />
+                )}
+        </>
+        ) }
+  
+
+
+        <div className="mt-8">
+          <Link to="/" className="text-sm text-indigo-600 hover:underline">Back to home</Link>
+        </div>
+      </div>
+    </>
+    )
+
+}
+
+function BlogGridDisplay({blogs}){
+  return(
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {blogs.map(blog => (
               <article key={blog.id} className="bg-white rounded-lg shadow p-6 flex flex-col h-full">
@@ -94,7 +119,7 @@ function MyBlogs(){
                     {blog.content}
                   </p>
 
-                  <div className="text-xs text-gray-500 italic">by {blog.author?.username ?? "Unknown"}</div>
+                  {/* <div className="text-xs text-gray-500 italic">by {blog.author?.username ?? "Unknown"}</div> */}
                 </div>
 
                 <div className="mt-4 flex gap-2">
@@ -117,15 +142,8 @@ function MyBlogs(){
               </article>
             ))}
           </div>
-        )}
 
-        <div className="mt-8">
-          <Link to="/" className="text-sm text-indigo-600 hover:underline">Back to home</Link>
-        </div>
-      </div>
-    </>
-    )
-
+          )
 }
 
 export default MyBlogs;
