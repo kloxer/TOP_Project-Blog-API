@@ -63,7 +63,7 @@ function MyBlogs(){
 
       }
       catch(err){
-        console.log(err)
+        console.log(String(err))
         setMessage(String(err))
       }
     }

@@ -42,13 +42,14 @@ const user = db
 //   } 
 // });
 
+require('dotenv').config();
 
 //JWT strategy
 var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'cats';
+opts.secretOrKey =  process.env.JWT_SECRET;
 // opts.issuer = 'accounts.examplesoft.com';
 // opts.audience = 'yoursite.net';
 
