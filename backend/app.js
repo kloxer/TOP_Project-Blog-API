@@ -118,7 +118,9 @@ app.use("/blogs", blogsRouter);
 
 app.get("/allblogs",  blogsController.getAllUserPublicBlogs)
 
-app.listen(3003, (err)=>{
-    console.log("listening one")
-    console.log(err);
-})
+
+const PORT = process.env.PORT || 3003;
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
