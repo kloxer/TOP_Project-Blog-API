@@ -14,7 +14,7 @@ blogsRouter.get("/", passport.authenticate('jwt', { session: false }), blogsCont
 
 blogsRouter.post("/", passport.authenticate('jwt', { session: false }), blogsController.postBlog);
 
-blogsRouter.get("/:id", passport.authenticate('jwt', { session: false }), blogsController.getBlog);
+blogsRouter.get("/:id",  blogsController.getBlog);
 
 
 blogsRouter.put("/:id", passport.authenticate('jwt', { session: false }), blogsController.updateBlog);

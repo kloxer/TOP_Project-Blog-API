@@ -18,12 +18,10 @@ function SingleBlogPage(){
   async function getBlog(){
     setLoading(true);
     try{
-      const token = localStorage.getItem('jwtToken');
       const response = await fetch(`${API_URL}/blogs/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token ? `bearer ${token}` : undefined
         },
         credentials: 'include'
       });

@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     path:"create", element:<ProtectedRoute><CreateBlog /> </ProtectedRoute>
   },
   {
-      path:"/:id", element:<ProtectedRoute><SingleBlogPage /> </ProtectedRoute>
+      path:"/:id", element:<SingleBlogPage />
   },
   {
       path:"myBlogs/:id/update", element:<ProtectedRoute><UpdateBlog /> </ProtectedRoute>
