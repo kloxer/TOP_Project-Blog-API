@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
+const API_URL = import.meta.env.VITE_API_URL;
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ function Register() {
     setMessageType("");
     setSaving(true);
     try {
-      const response = await fetch("http://localhost:3003/users/signup", {
+      const response = await fetch(`${API_URL}/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, email }),

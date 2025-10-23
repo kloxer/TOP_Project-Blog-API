@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function LoginPage(){
      const { token , login} = useAuth();
 
@@ -16,7 +17,7 @@ function LoginPage(){
      async function handleSubmit(e){
         e.preventDefault();
         try{
-        const response = await fetch('http://localhost:3003/users/login', {
+        const response = await fetch(`${API_URL}/users/login`, {
           method:'POST',
           credentials: 'include',
           headers:{

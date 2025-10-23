@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function MyBlogs(){
 
@@ -10,7 +11,7 @@ function MyBlogs(){
     async function getBlogs(){
         try{
              const token = localStorage.getItem('jwtToken')
-            const response = await fetch("http://localhost:3003/blogs",{
+            const response = await fetch(`${API_URL}/blogs`,{
                 credentials: 'include',
                 headers: { 
                   'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ function MyBlogs(){
     async function deleteBlog(id){
       try{
             const token = localStorage.getItem('jwtToken')
-            const response = await fetch(`http://localhost:3003/blogs/${id}`, {
+            const response = await fetch(`${API_URL}/blogs/${id}`, {
                 method:'DELETE',
                 headers:{
                     'Content-Type':'application/json',

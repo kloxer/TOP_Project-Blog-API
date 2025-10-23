@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { useLocation } from 'react-router-dom';
-
+const API_URL = import.meta.env.VITE_API_URL;
 function UpdateBlog(){
 
         const [title, setTitle] = useState("f")
@@ -26,7 +26,7 @@ function UpdateBlog(){
 
             try{
 
-                    const response = await fetch(`http://localhost:3003/blogs/${id}`, {
+                    const response = await fetch(`${API_URL}/blogs/${id}`, {
                     method:'get',
                     headers:{
                         'Content-Type':'application/json',
@@ -61,7 +61,7 @@ function UpdateBlog(){
                 setSaving(true);
 
             try{
-                const response = await fetch(`http://localhost:3003/blogs/${id}`, {
+                const response = await fetch(`${API_URL}/blogs/${id}`, {
                     method:'PUT',
                     headers:{
                         'Content-Type':'application/json',

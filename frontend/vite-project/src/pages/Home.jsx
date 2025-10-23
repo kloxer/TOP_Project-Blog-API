@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { data, Link } from "react-router"
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Home(){
 
@@ -13,7 +14,7 @@ function Home(){
 
     async function getBlogs(){
         try{
-            const response = await fetch("http://localhost:3003/allblogs",{
+            const response = await fetch(`${API_URL}/allblogs`,{
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
             })

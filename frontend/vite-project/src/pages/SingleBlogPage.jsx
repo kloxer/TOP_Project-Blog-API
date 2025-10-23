@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function SingleBlogPage(){
   const { id } = useParams();
@@ -18,7 +19,7 @@ function SingleBlogPage(){
     setLoading(true);
     try{
       const token = localStorage.getItem('jwtToken');
-      const response = await fetch(`http://localhost:3003/blogs/${id}`, {
+      const response = await fetch(`${API_URL}/blogs/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ function SingleBlogPage(){
     }
     setSubmitting(true);
     try{
-      const response = await fetch(`http://localhost:3003/blogs/${id}/comments`, {
+      const response = await fetch(`${API_URL}/blogs/${id}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim(), comment: comment.trim() })

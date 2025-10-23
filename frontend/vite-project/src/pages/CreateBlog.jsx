@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function CreateBlog() {
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -12,12 +14,13 @@ function CreateBlog() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
     setSaving(true);
     try {
-      const res = await fetch("http://localhost:3003/blogs", {
+      const res = await fetch(`${API_URL}/blogs`, {
         method: "POST",
         credentials: "include",
         headers: {
