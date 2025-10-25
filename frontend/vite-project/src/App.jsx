@@ -41,7 +41,7 @@ function App() {
         try{
                 const token = localStorage.getItem('jwtToken')
 
-            console.log("trying to get data....")
+            console.log("trying to get datass....")
             const response = await fetch("http://localhost:3003/api/me3",{
                 credentials: 'include', // IMPORTANT
                 headers: { 
